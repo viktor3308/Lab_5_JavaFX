@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class Server extends Application {
 	
-	private final String SERVER_TITLE = "Server";	
+	private static final String SERVER_TITLE = "Server";
 	private ServerTask m_serverTask;
 
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class Server extends Application {
     
         m_serverTask = new ServerTask();
         
-        ServerFormController serverFormController = (ServerFormController) fxmlLoader.getController();
+        ServerFormController serverFormController = fxmlLoader.getController();
         serverFormController.statusProperty().bind(m_serverTask.messageProperty());
         new Thread(m_serverTask).start();        
 	}
@@ -38,7 +38,7 @@ public class Server extends Application {
 	public void start(Stage stage) {		
 		try {
 			initialize(stage);
-		} catch(Exception e) {
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
 	}

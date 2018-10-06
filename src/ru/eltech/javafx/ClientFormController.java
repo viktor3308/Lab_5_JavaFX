@@ -34,22 +34,7 @@ public class ClientFormController implements Initializable {
 	private double m_values[] = new double[4];
 	
 	private Timeline m_heartbeatTimeline = new Timeline(
-		    new KeyFrame(Duration.seconds(1), handler -> {			    	
-		    	try {
-		    		Request heartBeatRequest = new Request(0, 4, null);
-		    		ClientFormController.this.sendRequest(heartBeatRequest);
-				} catch (Exception e) {
-					ClientFormController.this.m_heartbeatTimeline.stop();
-					System.out.println(CONNECTION_CLOSED);
-		    		final InformationDialog informationDialog =
-		    				new InformationDialog(DIALOG_TITLE, CONNECTION_CLOSED);
-		    		informationDialog.setOnHidden(evt -> {
-		    				ClientFormController.this.closeConnection();
-			    			Platform.exit();
-		    			});
-		    		informationDialog.show();
-				}
-		    })
+		    new KeyFrame(Duration.seconds(1), this::handle)
 		);
 
     @FXML
@@ -213,4 +198,19 @@ public class ClientFormController implements Initializable {
 		processRequest(new Request(0, 3, m_values));
 	}
 
+	private void handle(javafx.event.ActionEvent handler) {
+		try {
+			Request heartBeatRequest = new Request(0, 4, null);
+			sendRequest(heartBeatRequest);
+		} catch (Exception e) {
+			m_heartbeatTimeline.stop();
+			System.out.println(CONNECTION_CLOSED);
+			final InformationDialog informationDialog =new InformationDialog(DIALOG_TITLE, CONNECTION_CLOSED);
+			informationDialog.setOnHidden(evt -> {
+				closeConnection();
+				Platform.exit();
+			});
+			informationDialog.show();
+		}
+	}
 }

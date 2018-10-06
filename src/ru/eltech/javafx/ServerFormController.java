@@ -17,7 +17,7 @@ public class ServerFormController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 	}
 
-	public StringProperty statusProperty() {
+	StringProperty statusProperty() {
 		return lblStatus.textProperty();
 	}
 }
