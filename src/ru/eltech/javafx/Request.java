@@ -7,11 +7,21 @@ public class Request implements Serializable {
 	public int id;
 	public int command;
 	
-	public double values[];
+	public double a;
+	public double b;
+	public double c;
+	public double d;
 	
 	public Request(int id_, int command_, double values_[]) {
 		id = id_;
 		command = command_;
-		values = values_;
+		a = values_[0];
+		b = values_[1];
+		c = values_[2];
+		d = values_[3];
+	}
+	
+	public Request(int id_) {
+		id = id_;
 	}
 }

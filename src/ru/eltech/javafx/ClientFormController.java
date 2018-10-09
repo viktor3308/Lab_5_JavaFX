@@ -36,7 +36,7 @@ public class ClientFormController implements Initializable {
 	private Timeline m_heartbeatTimeline = new Timeline(
 		    new KeyFrame(Duration.seconds(1), handler -> {			    	
 		    	try {
-		    		Request heartBeatRequest = new Request(0, 4, null);
+		    		Request heartBeatRequest = new Request(0);
 		    		ClientFormController.this.sendRequest(heartBeatRequest);
 				} catch (Exception e) {
 					ClientFormController.this.m_heartbeatTimeline.stop();
@@ -195,22 +195,22 @@ public class ClientFormController implements Initializable {
 	
 	public void onCalculateTriangleSquare() {
 		readValues();
-		processRequest(new Request(0, 0, m_values));
+		processRequest(new Request(1, 0, m_values));
 	}
 	
 	public void onCalculateTrapezeSquare() {
 		readValues();
-		processRequest(new Request(0, 1, m_values));
+		processRequest(new Request(1, 1, m_values));
 	}
 	
 	public void onCalculateParallelogramPerimeter() {
 		readValues();
-		processRequest(new Request(0, 2, m_values));
+		processRequest(new Request(1, 2, m_values));
 	}
 	
 	public void onCalculatePyramidVolume() {
 		readValues();
-		processRequest(new Request(0, 3, m_values));
+		processRequest(new Request(1, 3, m_values));
 	}
 
 }

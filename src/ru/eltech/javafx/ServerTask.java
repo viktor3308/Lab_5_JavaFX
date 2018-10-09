@@ -30,28 +30,30 @@ public class ServerTask extends Task<Void> {
 	private Double getResult() {
 		Double result = null;
 		
+    	double a = m_request.a;
+    	double b = m_request.b;
+    	double c = m_request.c;
+    	double d = m_request.d;
+//    	double a = m_request.values[0];
+//    	double b = m_request.values[1];
+//    	double c = m_request.values[2];
+//    	double d = m_request.values[3];
+		
 		switch (m_request.command) {
 		case 0:
-			result = new Double( m_request.values[0] *
-								 m_request.values[1] *
-								 m_request.values[2] /
-								 (4 * m_request.values[3]) );
+			result = new Double( a * b * c / (4 * d) );
 			break;
 		case 1:
-	    	double a = m_request.values[0];
-	    	double b = m_request.values[1];
-	    	double c = m_request.values[2];
-	    	double d = m_request.values[3];
 	    	double p = (a + b + c + d) / 2.;			    	
 	    	result = new Double( (a + b) / Math.abs(a - b) );
 	    	result *= Math.sqrt( (p - a) * (p - b) *
 	    			             (p - a - c) * (p - a - d) );
 			break;
 		case 2:
-			result = new Double( 2 * (m_request.values[0] + m_request.values[1]) );
+			result = new Double( 2 * (a + b) );
 			break;
 		case 3:
-			result = new Double( (1. / 3.) * m_request.values[0] * m_request.values[1] );
+			result = new Double( (1. / 3.) * a * b );
 			break;			
 		}
 		
@@ -79,14 +81,16 @@ public class ServerTask extends Task<Void> {
 					
 					while (!isCancelled()) {
 						m_request = (Request) in.readObject();
-						Double result = getResult();
-						if (result != null) {
-							Response response = new Response();
-							response.id = m_request.id;
-							response.result = result;
-							out.writeObject(response);						
-							out.flush();
-						}								
+						if(m_request.id != 0) {
+							Double result = getResult();
+							if (result != null) {
+								Response response = new Response();
+								response.id = m_request.id;
+								response.result = result;
+								out.writeObject(response);						
+								out.flush();
+							}
+						}
 					}
 				}
 				catch (java.net.SocketTimeoutException e) {
